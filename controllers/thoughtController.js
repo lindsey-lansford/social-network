@@ -42,11 +42,11 @@ module.exports = {
       });
   },
 
-  //Update a thoughtText by ID
+  //Update a thought by ID
   updateThought(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
-      { $set: { thoughtText: req.body.thoughtText }},
+      { $set: req.body },
       { runValidators: true, new: true }
     )
     .then((thought) =>
@@ -83,13 +83,14 @@ module.exports = {
   addReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
-      { $addToSet: { reactions: { _id: req.body } } },
+      { $push: { reactions: req.body } },
       { runValidators: true, new: true }
     )
-    .then((thought) =>
-    !thought
+    .populate('reactions')
+    .then((reaction) =>
+    !reaction
       ? res.status(404).json({ message: 'No thought found with that ID' })
-      : res.json(thought)
+      : res.json(reaction)
   )
   .catch((err) => res.status(500).json(err));
   },

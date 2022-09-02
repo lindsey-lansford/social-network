@@ -21,12 +21,12 @@ const reactionSchema = new Schema(
     },
     createdAt: {
       type: Date,
-      default: Date.now,
-      // get: (date) => moment(date).format('LLLL'),
+      default: Date.now()
     },
   },
   {
     toJSON: {
+      virtuals: true,
       getters: true,
     },
     id: false,
@@ -44,8 +44,7 @@ const thoughtSchema = new Schema(
     },
     createdAt: {
       type: Date,
-      default: Date.now,
-      // get: (date) => moment(date).format('LLLL'),
+      default: Date.now()
     },
     // User that created this thought
     username: {

@@ -4,8 +4,8 @@ module.exports = {
   //Get all users
   getUsers(req, res) {
     User.find()
-    .populate('thoughts')
-    .populate('friends')
+      .populate('thoughts')
+      .populate('friends')
       .then((users) => res.json(users))
       .catch((err) => res.status(500).json(err));
   },
@@ -13,8 +13,8 @@ module.exports = {
   //Get a single user by ID
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
-      // .populate('thoughts')
-      // .populate('friends')
+      .populate('thoughts')
+      .populate('friends')
       .then((user) =>
         !user
           ? res.status(404).json({ message: 'No user found with that ID' })
